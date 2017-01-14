@@ -63,13 +63,13 @@ app.controller('AppointmentApp', function ($scope, $http) {
 app.controller('homePageCtrl', function ($scope, $location) {
 	
 	jQuery(".success").delay(900).fadeOut();
-	// id of appointment for  requested action 
+	
+	// message for feedback
 	$scope.action_resp= $location.search().action;
 	
 	var appoin = localStorage.getItem("appointments");
 	var appointments = JSON.parse(appoin);
 	
-	console.log(appointments); 
     // in able to sort we need to restructure the data without the ids
     var appt_without_ids = [];
     jQuery.each( appointments, function( key, value ) {
