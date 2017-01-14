@@ -1,0 +1,15 @@
+<!-- Update Appointment -->
+<div id="update">
+		<h1> Update Appointment</h1>
+		<h2>{{ appt_info.title }}</h2>
+		<label for="Title"> Title: </label>
+		<input type="text" ng-model="title" name="Title"/>
+		<label for="Description"> Description: </label>
+		<textarea type="text" ng-model="description" name="Description"> </textarea>
+		<label for="StartTime"> Start Time: </label>
+		<input type="text" class="datepicker" ng-model="startTime" name="StartTime"/>
+		<label for="EndTime"> End Time: </label>
+		<input type="text" class="datepicker" ng-model="endTime" name="EndTime"/>
+		<button ng-click="updateAppointment();"> Update </button>
+</div>
+<!-- /#Update Appointment-->

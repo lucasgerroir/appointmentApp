@@ -1,0 +1,15 @@
+<!-- AppointmentList -->
+
+<div id="appointmentlist">
+  <span class="success" ng-show="action_resp != null"> You have successfully {{action_resp}} your appointment.</span>
+	<div ng-repeat="appointment in appointments">
+		<h2>{{ appointment.title }}</h2>
+		
+		<p><span> Description: </span> {{ appointment.description }}</p>
+		<p><span> Start Time: </span> {{ appointment.startTime }}</p>
+		<p><span> End Time: </span> {{ appointment.endTime }}</p>
+		<a href="#/delete?id={{ appointment.id }}"> <i class="fa fa-trash" aria-hidden="true"></i> </a>
+		<a href="#/update?id={{ appointment.id }}"> <i class="fa fa-pencil" aria-hidden="true"></i> </a>
+	</div>
+</div>
+<!-- /#AppointmentList -->
