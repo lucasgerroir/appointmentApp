@@ -3,10 +3,10 @@
 
 <div id="delete">
 		
-		<h2> {{ title }}</h2>
-		<p><span> Description: </span> {{ description }}</p>
-		<p><span> Start Time: </span> {{ startTime }}</p>
-		<p><span> End Time: </span> {{ endTime }}</p>
+		<h1> {{ action_data.title }}</h1>
+		<p><span> Description: </span> {{ action_data.description }}</p>
+		<p><span> Start Time: </span> {{ action_data.startTime }}</p>
+		<p><span> End Time: </span> {{ action_data.endTime }}</p>
 		
 </div>
 <button ng-click="deleteAppointment();"> Delete </button>

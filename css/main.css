@@ -48,7 +48,7 @@ footer {
   padding-bottom: 30px;
 }
 
-#appointmentlist div, #delete {
+#appointmentlist div, #delete, #update div, #create div {
     margin: 20px 0px;
     border: #bbb solid 1px;
     border-left: #333 solid 5px;

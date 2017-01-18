@@ -1,15 +1,23 @@
 <!-- Update Appointment -->
 <div id="update">
 		<h1> Update Appointment</h1>
-		<h2>{{ appt_info.title }}</h2>
+		<h2>Preview: </h2>
+		<div>
+			<h2> {{ action_data.title }}</h2>
+			<p><span> Description: </span> {{ action_data.description }}</p>
+			<p><span> Start Time: </span> {{ action_data.startTime }}</p>
+			<p><span> End Time: </span> {{ action_data.endTime }}</p>
+		</div>
+
+		<h2>Form: </h2>
 		<label for="Title"> Title: </label>
-		<input type="text" ng-model="title" name="Title"/>
+		<input type="text" ng-model="action_data.title" name="Title"/>
 		<label for="Description"> Description: </label>
-		<textarea type="text" ng-model="description" name="Description"> </textarea>
+		<textarea type="text" ng-model="action_data.description" name="Description"> </textarea>
 		<label for="StartTime"> Start Time: </label>
-		<input type="text" class="datepicker" ng-model="startTime" name="StartTime"/>
+		<input type="text" class="datepicker" ng-model="action_data.startTime" name="StartTime"/>
 		<label for="EndTime"> End Time: </label>
-		<input type="text" class="datepicker" ng-model="endTime" name="EndTime"/>
+		<input type="text" class="datepicker" ng-model="action_data.endTime" name="EndTime"/>
 		<button ng-click="updateAppointment();"> Update </button>
 </div>
 <!-- /#Update Appointment-->

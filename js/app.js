@@ -43,6 +43,17 @@ app.controller('AppointmentApp', function ($scope, $http) {
 			
 		    var appointments = myobj.data;
 		    
+		    // in able to sort we need to restructure the data without the ids
+		    var appt_fields = [];
+		    var first_appt = appointments[Object.keys(appointments)[0]];
+		    
+		    jQuery.each( first_appt, function( key, value ) {
+		    	appt_fields.push(key);
+		    });
+		    
+		    //store the different fields
+		    localStorage.setItem("fields", JSON.stringify(appt_fields));
+		    
 		    //store the appointments using html5 local storage
 		    localStorage.setItem("appointments", JSON.stringify(appointments));
 			
@@ -63,8 +74,7 @@ app.controller('AppointmentApp', function ($scope, $http) {
 app.controller('homePageCtrl', function ($scope, $location) {
 	
 	jQuery(".success").delay(900).fadeOut();
-	
-	// message for feedback
+	// id of appointment for  requested action 
 	$scope.action_resp= $location.search().action;
 	
 	var appoin = localStorage.getItem("appointments");
@@ -91,7 +101,7 @@ app.controller('homePageCtrl', function ($scope, $location) {
 /**
  * Controller handles all actions like updating, deleting or creating appointments
  * @param object $scope      stores an object of all variables and functions relative to this scope
- * @param obejct $location   stores all the infromation on the current url such as passed parameters
+ * @param object $location   stores all the infromation on the current url such as passed parameters
  */
 app.controller('actionCtrl', function ($scope, $location) {
 	
@@ -105,27 +115,25 @@ app.controller('actionCtrl', function ($scope, $location) {
 	var appoin = localStorage.getItem("appointments");
 	var appointment_info = JSON.parse(appoin);
 	
+	//store the fields this way we can add more fields to the JSON object without updating code.
+	var fields = localStorage.getItem("fields");
+		fields = JSON.parse(fields)
+	
 	// if we are not creating a new appointment setup info for the view
 	if (appointment_info[appointment_id]) {
 		
 		// set
-		$scope.title = appointment_info[appointment_id].title;
-		$scope.description = appointment_info[appointment_id].description;
-		$scope.startTime = appointment_info[appointment_id].startTime;
-		$scope.endTime = appointment_info[appointment_id].endTime;
+		var action_data = set_fields(fields, appointment_info[appointment_id]);
+		$scope.action_data = action_data;
+
 	}
 
 	// handles all updating functionality
 	$scope.updateAppointment = function() {
 		
 		// store updated values
-		var update_obj = {};
-		update_obj.title = $scope.title;
-		update_obj.description = $scope.description;
-		update_obj.startTime = $scope.startTime;
-		update_obj.endTime = $scope.endTime;
-		update_obj.id = appointment_id;
-		
+		var update_obj = set_fields(fields, $scope["action_data"]);
+
 		// relocate back to the main page
 		appointment_info[appointment_id] = update_obj;
 		localStorage.setItem("appointments", JSON.stringify(appointment_info));
@@ -162,10 +170,7 @@ app.controller('actionCtrl', function ($scope, $location) {
 	
 	   //create the new object of inputted data
 		var create_obj = {};
-		create_obj.title = $scope.title;
-		create_obj.description = $scope.description;
-		create_obj.startTime = $scope.startTime;
-		create_obj.endTime = $scope.endTime;
+		var create_obj = set_fields(fields, $scope);
 		
 		//generate the new id for the created appointment
 		var last_id = appointment_info[Object.keys(appointment_info)[Object.keys(appointment_info).length - 1]].id;
@@ -180,6 +185,22 @@ app.controller('actionCtrl', function ($scope, $location) {
 		$location.search().action = "created"; 
 		$location.path("/"); 
 	}
+	
+   /**
+	* Sets data to a new object based on the current fields stored in the JSON object
+	* @param array fields         All the fields for each appointment
+	* @param object passed_data   the data we want to set to the new data object
+	*/
+	function set_fields( fields, passed_data ){
+		
+		var data = {};
+		jQuery.each( fields, function( key, value ) {
+			data[value] = passed_data[value];
+		});
+		
+		return data;
+	}
+	
 
 });
 
